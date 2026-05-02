@@ -23,7 +23,16 @@ const shutdown = async (signal) => {
   process.exit(0);
 };
 
-process.on('SIGINT', () => shutdown('SIGINT'));
-process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT').catch((err) => {
+  fastify.log.error(err);
+  process.exit(1);
+}));
+process.on('SIGTERM', () => shutdown('SIGTERM').catch((err) => {
+  fastify.log.error(err);
+  process.exit(1);
+}));
 
-start();
+start().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
