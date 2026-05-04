@@ -1,11 +1,28 @@
 async function birthdayRoutes(fastify, options) {
-  fastify.get('/birthday/:name', async (request, reply) => {
-    const { name } = request.params;
-
-    if (!name || name.trim() === '') {
-      reply.code(400);
-      return { error: 'Name is required' };
+  fastify.get('/birthday/:name', {
+    schema: {
+      params: {
+        type: 'object',
+        required: ['name'],
+        properties: {
+          name: {
+            type: 'string',
+            pattern: '^[a-zA-Z]+$'
+          }
+        }
+      },
+      response: {
+        200: {
+          type: 'object',
+          required: ['message'],
+          properties: {
+            message: { type: 'string' }
+          }
+        }
+      }
     }
+  }, async (request, reply) => {
+    const { name } = request.params;
 
     return { message: `🎂 Happy Birthday, ${name}! Have a wonderful day!` };
   });

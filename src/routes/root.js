@@ -1,13 +1,49 @@
 async function rootRoutes(fastify, options) {
-  fastify.get('/', async (request, reply) => {
+  fastify.get('/', {
+    schema: {
+      response: {
+        200: {
+          type: 'object',
+          required: ['hello'],
+          properties: {
+            hello: { type: 'string' }
+          }
+        }
+      }
+    }
+  }, async (request, reply) => {
     return { hello: 'world' };
   });
 
-  fastify.get('/health', async (request, reply) => {
+  fastify.get('/health', {
+    schema: {
+      response: {
+        200: {
+          type: 'object',
+          required: ['status'],
+          properties: {
+            status: { type: 'string' }
+          }
+        }
+      }
+    }
+  }, async (request, reply) => {
     return { status: 'ok' };
   });
 
-  fastify.get('/ping', async (request, reply) => {
+  fastify.get('/ping', {
+    schema: {
+      response: {
+        200: {
+          type: 'object',
+          required: ['serverTime'],
+          properties: {
+            serverTime: { type: 'string' }
+          }
+        }
+      }
+    }
+  }, async (request, reply) => {
     return { serverTime: new Date().toISOString() };
   });
 }
