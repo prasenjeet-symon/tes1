@@ -4,12 +4,14 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/**/*.test.js"
   },
   "engines": {
     "node": ">=20.0.0"
   },
   "dependencies": {
+    "@fastify/helmet": "^13.0.2",
     "fastify": "^5.0.0"
   }
 }
