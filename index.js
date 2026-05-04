@@ -1,27 +1,6 @@
-const fastify = require('fastify')({ logger: true });
+const { buildApp } = require('./src/app');
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' };
-});
-
-fastify.get('/health', async (request, reply) => {
-  return { status: 'ok' };
-});
-
-fastify.get('/ping', async (request, reply) => {
-  return { serverTime: new Date().toISOString() };
-});
-
-fastify.get('/birthday/:name', async (request, reply) => {
-  const { name } = request.params;
-
-  if (!name || name.trim() === '') {
-    reply.code(400);
-    return { error: 'Name is required' };
-  }
-
-  return { message: `🎂 Happy Birthday, ${name}! Have a wonderful day!` };
-});
+const fastify = buildApp({ logger: true });
 
 const start = async () => {
   try {
