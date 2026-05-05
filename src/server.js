@@ -7,10 +7,11 @@ const app = buildApp({
 const start = async () => {
   try {
     const port = process.env.PORT || 3000;
-    const host = process.env.HOST || '127.0.0.1';
+    const host = process.env.HOST || '0.0.0.0';
     await app.listen({ port, host });
   } catch (err) {
     app.log.error(err);
+    await app.close();
     process.exit(1);
   }
 };
@@ -31,5 +32,10 @@ const shutdown = async (signal) => {
 
 process.on('SIGINT', () => shutdown('SIGINT'));
 process.on('SIGTERM', () => shutdown('SIGTERM'));
+
+process.on('unhandledRejection', (reason) => {
+  app.log.fatal(reason, 'Unhandled Rejection');
+  process.exit(1);
+});
 
 start();
