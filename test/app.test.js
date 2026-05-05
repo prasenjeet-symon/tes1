@@ -28,7 +28,7 @@ test('GET /health returns 200 and status ok', async (t) => {
   assert.deepStrictEqual(response.json(), { status: 'ok' });
 });
 
-test('GET /ping returns 200 and a valid ISO timestamp', async (t) => {
+test('GET /ping returns 200 and pong', async (t) => {
   const app = buildApp();
   t.after(() => app.close());
 
@@ -38,11 +38,5 @@ test('GET /ping returns 200 and a valid ISO timestamp', async (t) => {
   });
 
   assert.strictEqual(response.statusCode, 200);
-  const body = response.json();
-  assert.ok(body.serverTime, 'Response should contain serverTime');
-  
-  // Verify it's a valid ISO timestamp
-  const date = new Date(body.serverTime);
-  assert.ok(!isNaN(date.getTime()), 'serverTime should be a valid date');
-  assert.strictEqual(date.toISOString(), body.serverTime, 'serverTime should be in ISO format');
+  assert.deepStrictEqual(response.json(), { ping: 'pong' });
 });
