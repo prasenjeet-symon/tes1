@@ -7,7 +7,7 @@ async function birthdayRoutes(fastify, options) {
         properties: {
           name: {
             type: 'string',
-            pattern: '^[a-zA-Z]+$'
+            pattern: '^[\\p{L}\\s\\-]+$'
           }
         }
       },
