@@ -36,15 +36,15 @@ async function rootRoutes(fastify, options) {
       response: {
         200: {
           type: 'object',
-          required: ['serverTime'],
+          required: ['ping'],
           properties: {
-            serverTime: { type: 'string' }
+            ping: { type: 'string' }
           }
         }
       }
     }
   }, async (request, reply) => {
-    return { serverTime: new Date().toISOString() };
+    return { ping: 'pong' };
   });
 }
 
