@@ -16,6 +16,7 @@ async function birthdayRoutes(fastify, options) {
         200: {
           type: 'object',
           required: ['message'],
+          additionalProperties: false,
           properties: {
             message: { type: 'string' }
           }

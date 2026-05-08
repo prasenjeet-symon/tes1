@@ -5,6 +5,7 @@ async function rootRoutes(fastify, options) {
         200: {
           type: 'object',
           required: ['hello'],
+          additionalProperties: false,
           properties: {
             hello: { type: 'string' }
           }
@@ -21,6 +22,7 @@ async function rootRoutes(fastify, options) {
         200: {
           type: 'object',
           required: ['status'],
+          additionalProperties: false,
           properties: {
             status: { type: 'string' }
           }
@@ -37,6 +39,7 @@ async function rootRoutes(fastify, options) {
         200: {
           type: 'object',
           required: ['ping'],
+          additionalProperties: false,
           properties: {
             ping: { type: 'string' }
           }
