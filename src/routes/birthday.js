@@ -7,7 +7,8 @@ async function birthdayRoutes(fastify, options) {
         properties: {
           name: {
             type: 'string',
-            pattern: '^[\\p{L}\\s\\-]+$'
+            pattern: '^[\\p{L}]+(?:[ \\-][\\p{L}]+)*$',
+            maxLength: 50
           }
         }
       },
