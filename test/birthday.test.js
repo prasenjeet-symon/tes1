@@ -88,6 +88,102 @@ test('GET /birthday/:name - invalid name (symbols)', async (t) => {
     url: '/birthday/John@Doe'
   });
 
-  // If we decide symbols are invalid
+  // Symbols are invalid
+  assert.strictEqual(response.statusCode, 400);
+});
+
+test('GET /birthday/:name - invalid name (tab)', async (t) => {
+  const app = buildApp();
+  t.after(() => app.close());
+
+  const response = await app.inject({
+    method: 'GET',
+    url: '/birthday/John%09Doe'
+  });
+
+  assert.strictEqual(response.statusCode, 400);
+});
+
+test('GET /birthday/:name - invalid name (newline)', async (t) => {
+  const app = buildApp();
+  t.after(() => app.close());
+
+  const response = await app.inject({
+    method: 'GET',
+    url: '/birthday/John%0ADoe'
+  });
+
+  assert.strictEqual(response.statusCode, 400);
+});
+
+test('GET /birthday/:name - invalid name (leading space)', async (t) => {
+  const app = buildApp();
+  t.after(() => app.close());
+
+  const response = await app.inject({
+    method: 'GET',
+    url: '/birthday/%20John'
+  });
+
+  assert.strictEqual(response.statusCode, 400);
+});
+
+test('GET /birthday/:name - invalid name (trailing space)', async (t) => {
+  const app = buildApp();
+  t.after(() => app.close());
+
+  const response = await app.inject({
+    method: 'GET',
+    url: '/birthday/John%20'
+  });
+
+  assert.strictEqual(response.statusCode, 400);
+});
+
+test('GET /birthday/:name - invalid name (double space)', async (t) => {
+  const app = buildApp();
+  t.after(() => app.close());
+
+  const response = await app.inject({
+    method: 'GET',
+    url: '/birthday/John%20%20Doe'
+  });
+
+  assert.strictEqual(response.statusCode, 400);
+});
+
+test('GET /birthday/:name - invalid name (standalone hyphen)', async (t) => {
+  const app = buildApp();
+  t.after(() => app.close());
+
+  const response = await app.inject({
+    method: 'GET',
+    url: '/birthday/-'
+  });
+
+  assert.strictEqual(response.statusCode, 400);
+});
+
+test('GET /birthday/:name - invalid name (double hyphen)', async (t) => {
+  const app = buildApp();
+  t.after(() => app.close());
+
+  const response = await app.inject({
+    method: 'GET',
+    url: '/birthday/John--Doe'
+  });
+
+  assert.strictEqual(response.statusCode, 400);
+});
+
+test('GET /birthday/:name - invalid name (over-long)', async (t) => {
+  const app = buildApp();
+  t.after(() => app.close());
+
+  const response = await app.inject({
+    method: 'GET',
+    url: '/birthday/' + 'a'.repeat(51)
+  });
+
   assert.strictEqual(response.statusCode, 400);
 });
