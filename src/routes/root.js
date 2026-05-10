@@ -1,3 +1,5 @@
+const os = require('os');
+
 async function rootRoutes(fastify, options) {
   fastify.get('/', {
     schema: {
@@ -36,15 +38,16 @@ async function rootRoutes(fastify, options) {
       response: {
         200: {
           type: 'object',
-          required: ['serverTime'],
+          required: ['serverTime', 'serverId'],
           properties: {
-            serverTime: { type: 'string' }
+            serverTime: { type: 'string' },
+            serverId: { type: 'string' }
           }
         }
       }
     }
   }, async (request, reply) => {
-    return { serverTime: new Date().toISOString() };
+    return { serverTime: new Date().toISOString(), serverId: os.hostname() };
   });
 }
 
