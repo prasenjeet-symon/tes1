@@ -1,13 +1,13 @@
 {
   "name": "hello-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js"
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
   },
   "engines": {
-    "node": ">=18.11.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "fastify": "^5.0.0"
